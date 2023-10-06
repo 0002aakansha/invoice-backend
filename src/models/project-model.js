@@ -1,14 +1,20 @@
 import mongoose, { Schema, model } from "mongoose";
+import { projectValidator } from "../utils/joiValidator";
 
-const schema = Schema({
-    description: { type: String, required: true, trim: true },
-    rate: { type: Number, required: true },
-    totalHours: { type: String, required: true },
-    amount: {},
-    conversionRate: { type: Number, required: true },
-    projectBelongsTo: { type: String, required: true, trim: true },
+const projectSchema = Schema({
+    description: { type: String },
+    rate: { type: Number },
+    totalHours: { type: String },
+    amount: { type: Number },
+    conversionRate: { type: Number },
+    projectBelongsTo: { type: String },
     projectCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
 })
 
-const Project = model('project', schema)
+projectSchema.methods.projectValidator = function (obj) {
+    const schema = projectValidator
+    return schema.validate(obj)
+}
+
+const Project = model('project', projectSchema)
 export default Project

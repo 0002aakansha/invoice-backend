@@ -36,6 +36,21 @@ const getCompanyByID = catchAsync(async (req, res, next) => {
     res.status(200).json({ status: 'true', companyDetail: searchResult })
 })
 
+// ************************incomplete**************************
+
+const getProjectsOfCompany = catchAsync(async (req, res, next) => {
+    const { id } = req.params
+
+    const projects = await Organization.findById({ companyCreatedBy: req.user._id, _id: id }).populate('projects')
+    console.log(projects);
+
+    if (!projects) return next(new AppError(`error`, 400))
+
+    res.status(200).json({ status: 'true', allListedProjects: projects })
+})
+
+// *************************************************************
+
 const updateCompanyById = catchAsync(async (req, res, next) => {
     const { id } = req.params
     const updateData = req.body
@@ -73,4 +88,4 @@ const deleteCompanyById = catchAsync(async (req, res, next) => {
     res.status(200).json({ status: 'true', message: 'Deleted successfully!' })
 })
 
-export { createCompany, getAllListedCompanies, getCompanyByID, updateCompanyById, deleteCompanyById }
+export { createCompany, getAllListedCompanies, getCompanyByID, getProjectsOfCompany, updateCompanyById, deleteCompanyById }

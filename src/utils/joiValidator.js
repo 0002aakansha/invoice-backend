@@ -129,3 +129,31 @@ export const UpdateValidator = (
         })
     })
 )
+
+export const projectValidator = (
+    Joi.object({
+        description: Joi.string()
+            .min(3)
+            .max(50)
+            .trim()
+            .required(),
+        rate: Joi.number()
+            .min(0)
+            .required(),
+        totalHours: Joi.number()
+            .min(0)
+            .required(),
+        amount: Joi.number()
+            .positive()
+            .required(),
+        conversionRate: Joi.number()
+            .positive()
+            .required(),
+        projectBelongsTo: Joi.string()
+            .trim()
+            .required(),
+        projectCreatedBy: Joi.string()
+            .trim()
+            .required(),
+    })
+)
