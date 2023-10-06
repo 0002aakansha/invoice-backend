@@ -38,7 +38,7 @@ export default (
         }),
         address: Joi.object({
             street: Joi.string()
-                .max(30)
+                .max(50)
                 .required(),
             city: Joi.string()
                 .min(3)
@@ -64,5 +64,68 @@ export default (
             .trim()
             .pattern(new RegExp('^[a-zA-Z0-9]{8,20}$'))
             .required()
+    })
+)
+
+export const OrgValidator = (
+    Joi.object({
+        name: Joi.string()
+            .min(3)
+            .max(40)
+            .trim()
+            .required(),
+        gstin: Joi.string()
+            .trim()
+            .alphanum()
+            .length(15)
+            .required(),
+        address: Joi.object({
+            street: Joi.string()
+                .max(50)
+                .required(),
+            city: Joi.string()
+                .min(3)
+                .max(15)
+                .required(),
+            state: Joi.string()
+                .min(3)
+                .max(15)
+                .required(),
+            pin: Joi.string()
+                .pattern(new RegExp('^[0-9]{6}$'))
+                .required(),
+            country: Joi.string()
+                .min(3)
+                .max(15)
+                .required()
+        })
+    })
+)
+
+export const UpdateValidator = (
+    Joi.object({
+        name: Joi.string()
+            .min(3)
+            .max(40)
+            .trim(),
+        gstin: Joi.string()
+            .trim()
+            .alphanum()
+            .length(15),
+        address: Joi.object({
+            street: Joi.string()
+                .max(50),
+            city: Joi.string()
+                .min(3)
+                .max(15),
+            state: Joi.string()
+                .min(3)
+                .max(15),
+            pin: Joi.string()
+                .pattern(new RegExp('^[0-9]{6}$')),
+            country: Joi.string()
+                .min(3)
+                .max(15)
+        })
     })
 )

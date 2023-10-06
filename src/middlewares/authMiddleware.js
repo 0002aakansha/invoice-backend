@@ -11,7 +11,7 @@ const userAuth = catchAsync(async (req, res, next) => {
                 next(new AppError(`JWT expires`))
             }
             else {
-                console.log(decoded);
+                // console.log(decoded);
                 req.user = decoded
                 next()
             }
