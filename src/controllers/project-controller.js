@@ -4,7 +4,7 @@ import AppError from "../utils/appError"
 import catchAsync from "../utils/catchAsync"
 
 const createProject = catchAsync(async (req, res) => {
-    const { description, rate, totalHours, conversionRate, companyId } = req.body
+    const { description, rate, totalHours, amount, conversionRate, companyId } = req.body
 
     // find company by it's id
     const company = await companyDetails.findById({ _id: companyId })
