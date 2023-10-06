@@ -4,14 +4,14 @@ import catchAsync from "../utils/catchAsync";
 
 const userAuth = catchAsync(async (req, res, next) => {
     const token = req.headers.authorization
-    
+
     if (token) {
         jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
             if (err) {
-                res.redirect('/')
-                throw ('jwt expires')
+                next(new AppError(`JWT expires`))
             }
             else {
+                console.log(decoded);
                 req.user = decoded
                 next()
             }

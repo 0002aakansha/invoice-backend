@@ -1,6 +1,5 @@
 import generateToken from '../helpers/generateToken';
 import hashPassword, { comparePassword } from '../helpers/hashPassword';
-import Details from '../models/details-model';
 import User from '../models/user-model'
 import AppError from "../utils/appError";
 import catchAsync from "../utils/catchAsync";
@@ -9,28 +8,39 @@ const Register = catchAsync(async (req, res, next) => {
     const { name, email, gstin, pan, address, contact, account, password } = req.body
 
     const existingUser = User.findOne({ email })
-
-    if (!existingUser) next(new AppError(`User Already Exists!`, 400))
+    if (!existingUser) return next(new AppError(`User Already Exists!`, 400))
 
     // user 
     const hashedPassword = await hashPassword(password)
-    const user = await User({ name, email, gstin, pan, account, password: hashedPassword, })
+    const user = await new User({
+        name, email, gstin, pan, account,
+        address: {
+            street: address.street,
+            city: address.city,
+            state: address.state,
+            pin: address.pin,
+            country: address.country
+        },
+        contact,
+        password: hashedPassword,
+    })
+
+    const { error } = user.joiValidate(req.body)
+    if (error) {
+        const msg = error.details.map(err => err.message).join(', ')
+        return next(new AppError(msg, 400))
+    }
+
     const newUser = await user.save()
-
-    // user details
-    const details = await Details({ address, contact })
-    const newDetail = await details.save()
-
-    const updatedUser = await User.findByIdAndUpdate({ _id: newUser._id }, { $set: { details: newDetail._id } }, { new: true })
 
     res.status(201).json({
         status: "true",
         message: "user created!",
         user: {
-            name: updatedUser.name,
-            email: updatedUser.email,
-            address: newDetail.address,
-            contact: newDetail.contact
+            name: newUser.name,
+            email: newUser.email,
+            address: newUser.address,
+            contact: newUser.contact
         }
     })
 })
@@ -40,7 +50,7 @@ const Login = catchAsync(async (req, res, next) => {
 
     const existingUser = await User.findOne({ email })
 
-    if (!existingUser) next(new AppError(`Unauthorized User!`, 401))
+    if (!existingUser) return next(new AppError(`Unauthorized User!`, 401))
     else if (await comparePassword(password, existingUser.password)) {
         // generate token
         const token = await generateToken({ _id: existingUser._id, name: existingUser.name })

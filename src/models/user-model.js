@@ -1,19 +1,31 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
+import joiValidator from "../utils/joiValidator";
 
-const schema = Schema({
-    name: { type: String, unique: true, trim: true, uppercase: true, required: true },
-    email: { type: String, unique: true, trim: true },
-    gstin: { type: String, required: true, uppercase: true, unique: true },
-    pan: { type: String, uppercase: true, unique: true, required: true, trim: true },
+const userSchema = Schema({
+    name: { type: String, unique: true, uppercase: true },
+    email: { type: String, unique: true },
+    gstin: { type: String, unique: true, uppercase: true },
+    pan: { type: String, uppercase: true, unique: true },
     account: {
-        acc_no: { type: String, unique: true, trim: true, required: true },
-        bank: { type: String, trim: true, required: true },
-        ifsc: { type: String, trim: true, required: true }
+        acc_no: { type: Number, unique: true },
+        bank: { type: String },
+        ifsc: { type: String }
     },
-    details: { type: mongoose.Schema.Types.ObjectId, ref: 'Detail' },
-    password: { type: String, trim: true, required: true },
-})
+    address: {
+        street: { type: String },
+        city: { type: String },
+        state: { type: String },
+        pin: { type: Number },
+        country: { type: String }
+    },
+    contact: { type: Number },
+    password: { type: String },
+});
 
+userSchema.methods.joiValidate = function (obj) {
+    const schema = joiValidator
+    return schema.validate(obj);
+}
 
-const User = model('user', schema)
+const User = model('user', userSchema)
 export default User
