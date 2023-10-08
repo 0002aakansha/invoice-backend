@@ -150,3 +150,50 @@ export const projectValidator = (
             .trim(),
     })
 )
+
+export const InvoiceValidator = (
+    Joi.object({
+        createdBy: Joi.string()
+            .trim()
+            .required(),
+        createdOn: Joi.date()
+            .min('1-1-1974')
+            .max(Date.now())
+            .required(),
+        projectsSelected: Joi.array()
+            .items(Joi.object({
+                id: Joi.number()
+                    .min(1)
+                    .required(),
+                description: Joi.string()
+                    .min(3)
+                    .max(50)
+                    .trim(),
+                period: Joi.number()
+                    .min(1),
+                rate: Joi.number()
+                    .min(0),
+                totalHours: Joi.number()
+                    .min(0),
+                conversionRate: Joi.number()
+                    .positive(),
+                amount: Joi.number()
+                    .positive()
+            })),
+        subTotal: Joi.number()
+            .min(0),
+        gst: Joi.object({
+            cgst: Joi.number()
+                .min(0)
+                .required(),
+            sgst: Joi.number()
+                .min(0)
+                .required(),
+        }) || Joi.number().positive(),
+        total: Joi.number()
+            .positive(),
+        invoiceCreatedBy: Joi.string()
+            .trim()
+    })
+)
+
