@@ -6,12 +6,9 @@ const schema = Schema({
     createdOn: { type: Date, required: true },
     projectsSelected: [{
         id: { type: Number, required: true, unique: true },
-        description: { type: String, required: true },
+        projectDetails: { type: mongoose.Schema.Types.ObjectId, ref: 'project' },
         period: { type: Number, required: true },
-        rate: { type: Number, required: true },
-        totalHours: { type: Number, required: true },
-        conversionRate: { type: Number, required: true },
-        amount: { type: Number, required: true },
+        totalAmount: { type: Number, required: true }
     }],
     subTotal: { type: Number, required: true },
     gst: { type: Object || Number, required: true },

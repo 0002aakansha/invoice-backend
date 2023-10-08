@@ -165,19 +165,11 @@ export const InvoiceValidator = (
                 id: Joi.number()
                     .min(1)
                     .required(),
-                description: Joi.string()
-                    .min(3)
-                    .max(50)
-                    .trim(),
+                projectDetails: Joi.string()
+                    .required(),
                 period: Joi.number()
                     .min(1),
-                rate: Joi.number()
-                    .min(0),
-                totalHours: Joi.number()
-                    .min(0),
-                conversionRate: Joi.number()
-                    .positive(),
-                amount: Joi.number()
+                totalAmount: Joi.number()
                     .positive()
             })),
         subTotal: Joi.number()
