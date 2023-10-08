@@ -135,25 +135,18 @@ export const projectValidator = (
         description: Joi.string()
             .min(3)
             .max(50)
-            .trim()
-            .required(),
+            .trim(),
         rate: Joi.number()
-            .min(0)
-            .required(),
+            .min(0),
         totalHours: Joi.number()
-            .min(0)
-            .required(),
+            .min(0),
         amount: Joi.number()
-            .positive()
-            .required(),
+            .positive(),
         conversionRate: Joi.number()
-            .positive()
-            .required(),
+            .positive(),
         projectBelongsTo: Joi.string()
-            .trim()
-            .required(),
+            .trim(),
         projectCreatedBy: Joi.string()
-            .trim()
-            .required(),
+            .trim(),
     })
 )

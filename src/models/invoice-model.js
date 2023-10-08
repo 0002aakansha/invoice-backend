@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 
 const schema = Schema({
-    company_name: { type: String, required: true },
+    invoiceCreatedBy: { type: String, required: true },
     date: { type: Date, required: true },
     invoice: [{
         id: { type: Number, required: true, unique: true },

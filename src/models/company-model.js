@@ -1,9 +1,9 @@
 import mongoose, { Schema, model } from 'mongoose'
-import { OrgValidator, UpdateValidator } from '../utils/joiValidator'
+import { OrgValidator } from '../utils/joiValidator'
 
 const orgSchema = Schema({
     name: { type: String, unique: true },
-    gstin: { type: String, unique: true, uppercase: true },
+    gstin: { type: String, uppercase: true, unique: true },
     address: {
         street: { type: String },
         city: { type: String },

@@ -19,7 +19,6 @@ const createCompany = catchAsync(async (req, res, next) => {
 })
 
 const getAllListedCompanies = catchAsync(async (req, res, next) => {
-    console.log("getAll");
     const getAll = await Organization.find({ companyCreatedBy: req.user._id })
 
     if (getAll.length === 0) return next(new AppError(`There are no listed companies!`, 404))
@@ -36,20 +35,15 @@ const getCompanyByID = catchAsync(async (req, res, next) => {
     res.status(200).json({ status: 'true', companyDetail: searchResult })
 })
 
-// ************************incomplete**************************
-
 const getProjectsOfCompany = catchAsync(async (req, res, next) => {
     const { id } = req.params
 
-    const projects = await Organization.findById({ companyCreatedBy: req.user._id, _id: id }).populate('projects')
-    console.log(projects);
+    const projects = await Organization.find({ companyCreatedBy: req.user._id, _id: id }).populate('projects')
 
-    if (!projects) return next(new AppError(`error`, 400))
+    if (projects.length === 0) return next(new AppError(`There are no listed companies!`, 404))
 
     res.status(200).json({ status: 'true', allListedProjects: projects })
 })
-
-// *************************************************************
 
 const updateCompanyById = catchAsync(async (req, res, next) => {
     const { id } = req.params

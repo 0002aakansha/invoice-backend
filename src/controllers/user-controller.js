@@ -7,8 +7,9 @@ import catchAsync from "../utils/catchAsync";
 const Register = catchAsync(async (req, res, next) => {
     const { name, email, gstin, pan, address, contact, account, password } = req.body
 
-    const existingUser = User.findOne({ email })
-    if (!existingUser) return next(new AppError(`User Already Exists!`, 400))
+    const existingUser = await User.findOne({ email })
+    console.log(existingUser);
+    if (existingUser) return next(new AppError(`User Already Exists!`, 400))
 
     // user 
     const hashedPassword = await hashPassword(password)
@@ -50,10 +51,12 @@ const Login = catchAsync(async (req, res, next) => {
 
     const existingUser = await User.findOne({ email })
 
-    if (!existingUser) return next(new AppError(`Unauthorized User!`, 401))
+    if (!existingUser) {
+        return next(new AppError(`Unauthorized User!`, 401))
+    }
     else if (await comparePassword(password, existingUser.password)) {
         // generate token
-        const token = await generateToken({ _id: existingUser._id, name: existingUser.name })
+        const token =  generateToken({ _id: existingUser._id, name: existingUser.name })
         res.status(200).json({
             status: "true",
             message: 'Logged in successfully',
