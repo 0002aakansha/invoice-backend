@@ -34,7 +34,7 @@ const createProject = catchAsync(async (req, res, next) => {
     await session.commitTransaction()
     session.endSession()
 
-    res.status(201).json({ success: 'true', message: 'project created successfully!', newProject: result })
+    res.status(201).json({ status: 'true', message: 'project created successfully!', newProject: result })
 })
 
 const getAllProjectsOfUser = catchAsync(async (req, res, next) => {
@@ -43,7 +43,7 @@ const getAllProjectsOfUser = catchAsync(async (req, res, next) => {
 
     if (allListedProjects.length === 0) return next(new AppError(`There are no listed projects!`, 404))
 
-    res.status(200).json({ success: 'true', allListedProjects })
+    res.status(200).json({ status: 'true', allListedProjects })
 })
 
 const getAllProjectsBelongsTo = catchAsync(async (req, res, next) => {
@@ -52,7 +52,7 @@ const getAllProjectsBelongsTo = catchAsync(async (req, res, next) => {
 
     if (allListedProjects.length === 0) return next(new AppError(`There are no listed projects!`, 404))
 
-    res.status(200).json({ success: 'true', allListedProjects })
+    res.status(200).json({ status: 'true', allListedProjects })
 })
 
 const getProjectById = catchAsync(async (req, res, next) => {
@@ -62,7 +62,7 @@ const getProjectById = catchAsync(async (req, res, next) => {
 
     if (!project) return next(new AppError('Not Found! Please provide valid details!', 400))
 
-    res.status(200).json({ success: 'true', project })
+    res.status(200).json({ status: 'true', project })
 })
 
 const updateProjectById = catchAsync(async (req, res, next) => {
@@ -75,7 +75,7 @@ const updateProjectById = catchAsync(async (req, res, next) => {
 
     if (!updatedProject) return next(new AppError('Error while updating project', 400))
 
-    res.status(200).json({ success: 'true', updatedProject })
+    res.status(200).json({ status: 'true', updatedProject })
 })
 
 const deleteProjectById = catchAsync(async (req, res, next) => {
@@ -93,7 +93,7 @@ const deleteProjectById = catchAsync(async (req, res, next) => {
     await session.commitTransaction()
     session.endSession()
 
-    res.status(200).json({ success: 'true', message: 'Project deleted successfully!' })
+    res.status(200).json({ status: 'true', message: 'Project deleted successfully!' })
 })
 
 export { createProject, getAllProjectsOfUser, getAllProjectsBelongsTo, getProjectById, updateProjectById, deleteProjectById }
