@@ -136,11 +136,15 @@ export const projectValidator = (
             .min(3)
             .max(50)
             .trim(),
-        rate: Joi.number()
+        rate: Joi.object({
+            currency: Joi.string()
+                .required(),
+            rate: Joi.number()
+                .min(0)
+                .required(),
+        })
             .min(0),
-        totalHours: Joi.number()
-            .min(0),
-        amount: Joi.number()
+        projectAmount: Joi.number()
             .positive(),
         conversionRate: Joi.number()
             .positive(),

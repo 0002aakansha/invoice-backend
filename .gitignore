@@ -4,4 +4,5 @@
 # Ignore environment files
 .env
 .env.*
-    
+
+/src/utils/user.json

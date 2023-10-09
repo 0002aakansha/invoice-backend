@@ -4,7 +4,7 @@ import AppError from "../utils/appError"
 import catchAsync from "../utils/catchAsync"
 
 const createProject = catchAsync(async (req, res, next) => {
-    const { description, rate, totalHours, amount, conversionRate, companyId } = req.body
+    const { description, rate, amount, conversionRate, companyId } = req.body
 
     // find company by it's id
     const projectBelongsTo = await Organization.findOne({ companyCreatedBy: req.user._id, _id: companyId })
@@ -17,10 +17,10 @@ const createProject = catchAsync(async (req, res, next) => {
     session.startTransaction()
     const opts = { session }
 
-    const newProject = await Project({ description, rate, totalHours, amount, conversionRate, projectBelongsTo: projectBelongsTo._id, projectCreatedBy: req.user._id })
+    const newProject = await Project({ description, rate, projectAmount: amount, conversionRate, projectBelongsTo: projectBelongsTo._id, projectCreatedBy: req.user._id })
     const result = await newProject.save(opts)
 
-    const { error } = newProject.projectValidator({ description, rate, totalHours, amount, conversionRate, projectBelongsTo: companyId })
+    const { error } = newProject.projectValidator({ description, rate, projectAmount: amount, conversionRate, projectBelongsTo: companyId })
 
     if (error) {
         const msg = error.details.map(err => err.message).join(', ')
