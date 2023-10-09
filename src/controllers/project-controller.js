@@ -39,7 +39,7 @@ const createProject = catchAsync(async (req, res, next) => {
 
 const getAllProjectsOfUser = catchAsync(async (req, res, next) => {
     // getting all projects of users
-    const allListedProjects = await Project.find({ projectCreatedBy: req.user._id })
+    const allListedProjects = await Project.find({ projectCreatedBy: req.user._id }).populate('projectBelongsTo').populate('projectCreatedBy')
 
     if (allListedProjects.length === 0) return next(new AppError(`There are no listed projects!`, 404))
 
