@@ -62,7 +62,12 @@ const Login = catchAsync(async (req, res, next) => {
             message: 'Logged in successfully',
             user: {
                 name: existingUser.name,
-                email: existingUser.email
+                email: existingUser.email,
+                gstin: existingUser.gstin,
+                pan: existingUser.pan,
+                account: existingUser.account,
+                address: existingUser.address,
+                contact: existingUser.contact
             },
             token
         })
