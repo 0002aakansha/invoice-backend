@@ -8,7 +8,7 @@ const userAuth = catchAsync(async (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
             if (err) {
-                next(new AppError(`JWT expires`))
+                next(new AppError(`JWT expires`, 401))
             }
             else {
                 // console.log(decoded);
@@ -17,7 +17,7 @@ const userAuth = catchAsync(async (req, res, next) => {
             }
         })
     }
-    else next(new AppError(`token not provided!`, 404))
+    else next(new AppError(`token not provided!`, 401))
 })
 
 export default userAuth

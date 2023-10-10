@@ -1,4 +1,5 @@
 import Organization from "../models/company-model"
+import Project from "../models/project-model"
 import AppError from "../utils/appError"
 import catchAsync from "../utils/catchAsync"
 
@@ -28,7 +29,7 @@ const getAllListedCompanies = catchAsync(async (req, res, next) => {
 
 const getCompanyByID = catchAsync(async (req, res, next) => {
     const { id } = req.params
-    const searchResult = await Organization.find({ companyCreatedBy: req.user._id, _id: id })
+    const searchResult = await Organization.find({ companyCreatedBy: req.user._id, _id: id }).populate('projects')
 
     if (!searchResult) return next(new AppError('Not Found!, Please check company_id', 404))
 
@@ -74,10 +75,17 @@ const deleteCompanyById = catchAsync(async (req, res, next) => {
     const { id } = req.params
 
     const isExists = await Organization.findOne({ companyCreatedBy: req.user._id, _id: id })
-
     if (!isExists) return next(new AppError('Not Exists! Please check company_id', 400))
 
-    await Organization.deleteOne({ companyCreatedBy: req.user._id, _id: id })
+    // const session = await Organization.startSession()
+    // session.startTransaction()
+    // const opt = { session }
+
+    const deletedData = await Organization.findByIdAndDelete({ _id: id })
+    deletedData.projects.map(async project => await Project.findByIdAndDelete({ _id: project._id }))
+
+    // await session.commitTransaction();
+    // session.endSession();
 
     res.status(200).json({ status: 'true', message: 'Deleted successfully!' })
 })

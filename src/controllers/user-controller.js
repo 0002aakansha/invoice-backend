@@ -56,13 +56,19 @@ const Login = catchAsync(async (req, res, next) => {
     }
     else if (await comparePassword(password, existingUser.password)) {
         // generate token
-        const token =  generateToken({ _id: existingUser._id, name: existingUser.name })
+        const token = generateToken({ _id: existingUser._id, name: existingUser.name })
         res.status(200).json({
             status: "true",
             message: 'Logged in successfully',
             user: {
+                _id: existingUser._id,
                 name: existingUser.name,
-                email: existingUser.email
+                email: existingUser.email,
+                gstin: existingUser.gstin,
+                pan: existingUser.pan,
+                account: existingUser.account,
+                address: existingUser.address,
+                contact: existingUser.contact
             },
             token
         })
@@ -72,6 +78,25 @@ const Login = catchAsync(async (req, res, next) => {
 
 const getAllUsers = catchAsync(async (req, res, next) => { })
 
-const getUserById = catchAsync(async (req, res, next) => { })
+const getUserById = catchAsync(async (req, res, next) => {
+    const { id } = req.params
+    const user = await User.findById({ _id: id })
+
+    if (!user) return next(new AppError('User not found!', 404))
+
+    res.status(200).json({
+        status: "true",
+        user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            gstin: user.gstin,
+            pan: user.pan,
+            account: user.account,
+            address: user.address,
+            contact: user.contact
+        }
+    })
+})
 
 export { Register, Login, getAllUsers, getUserById }
