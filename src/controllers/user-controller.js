@@ -78,6 +78,26 @@ const Login = catchAsync(async (req, res, next) => {
 
 const getAllUsers = catchAsync(async (req, res, next) => { })
 
-const getUserById = catchAsync(async (req, res, next) => { })
+const getUserById = catchAsync(async (req, res, next) => {
+    const { id } = req.params
+    const user = await User.findById({ _id: id })
+
+    if (!user) return next(new AppError('User not found!', 404))
+
+    res.status(200).json({
+        status: "true",
+        user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            gstin: user.gstin,
+            pan: user.pan,
+            account: user.account,
+            address: user.address,
+            contact: user.contact
+        }
+    })
+})
+
 
 export { Register, Login, getAllUsers, getUserById }
