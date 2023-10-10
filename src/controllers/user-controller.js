@@ -99,4 +99,5 @@ const getUserById = catchAsync(async (req, res, next) => {
     })
 })
 
+
 export { Register, Login, getAllUsers, getUserById }
