@@ -8,7 +8,9 @@ const projectSchema = Schema({
     conversionRate: { type: Number, required: true },
     projectBelongsTo: { type: mongoose.Schema.Types.ObjectId, ref: 'organization', required: true },
     projectCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }
-})
+}, {
+    timestamps: true
+  })
 
 projectSchema.methods.projectValidator = function (obj) {
     const schema = projectValidator

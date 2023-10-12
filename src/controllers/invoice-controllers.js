@@ -1,5 +1,4 @@
 import Invoice from "../models/invoice-model"
-import AppError from "../utils/appError"
 import catchAsync from "../utils/catchAsync"
 
 const createInvoice = catchAsync(async (req, res, next) => {

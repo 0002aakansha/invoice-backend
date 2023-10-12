@@ -14,7 +14,9 @@ const schema = Schema({
     gst: { type: Object || Number, required: true },
     total: { type: Number, required: true },
     invoiceCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }
-})
+}, {
+    timestamps: true
+  })
 
 schema.methods.invoiceValidator = function (obj) {
     const schema = InvoiceValidator

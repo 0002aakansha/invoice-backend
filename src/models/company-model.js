@@ -13,7 +13,9 @@ const orgSchema = Schema({
     },
     projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'project' }],
     companyCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
-})
+}, {
+    timestamps: true
+  })
 
 orgSchema.methods.orgValidator = function (obj) {
     const schema = OrgValidator

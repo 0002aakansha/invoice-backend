@@ -19,7 +19,10 @@ const userSchema = Schema({
         country: { type: String }
     },
     contact: { type: Number },
-    password: { type: String },
+    password: { type: String || undefined },
+    passwordResetToken: { type: String }
+}, {
+    timestamps: true
 });
 
 userSchema.methods.joiValidate = function (obj) {

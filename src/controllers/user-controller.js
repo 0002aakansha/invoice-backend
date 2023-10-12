@@ -1,8 +1,10 @@
+import sendMail from '../helpers/generateMail';
 import generateToken from '../helpers/generateToken';
 import hashPassword, { comparePassword } from '../helpers/hashPassword';
 import User from '../models/user-model'
 import AppError from "../utils/appError";
 import catchAsync from "../utils/catchAsync";
+import jwt from 'jsonwebtoken'
 
 const Register = catchAsync(async (req, res, next) => {
     const { name, email, gstin, pan, address, contact, account, password } = req.body
@@ -38,6 +40,7 @@ const Register = catchAsync(async (req, res, next) => {
         status: "true",
         message: "user created!",
         user: {
+            _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
             address: newUser.address,
@@ -56,7 +59,7 @@ const Login = catchAsync(async (req, res, next) => {
     }
     else if (await comparePassword(password, existingUser.password)) {
         // generate token
-        const token = generateToken({ _id: existingUser._id, name: existingUser.name })
+        const token = generateToken({ _id: existingUser._id, name: existingUser.name }, '1d')
         res.status(200).json({
             status: "true",
             message: 'Logged in successfully',
@@ -99,5 +102,73 @@ const getUserById = catchAsync(async (req, res, next) => {
     })
 })
 
+const deleteUserById = catchAsync(async (req, res, next) => {
+    const { id } = req.params
+    const user = await User.findByIdAndDelete({ _id: id })
 
-export { Register, Login, getAllUsers, getUserById }
+    if (!user) return next(new AppError('User not found!', 404))
+
+    res.status(200).json({
+        status: "true",
+        message: 'User Deleted Successfully!'
+    })
+})
+
+const forgetPasswordHandler = catchAsync(async (req, res, next) => {
+    const { email } = req.body
+    const user = await User.findOne({ email })
+
+    if (!user) return next(new AppError('User not found!', 404))
+
+    const resetToken = generateToken({ _id: user._id, email: user.email }, '1d')
+
+    const url = `${req.protocol}://${req.get('host')}/api/v1/user/reset/password/${resetToken}`
+    const message = {
+        title: "Reset Password",
+        description: `<p>A password reset event has been triggered. The password reset window is limited for 10mins. </p>
+        <p>If you do not reset your password within 10mins, you will need to submit a new request.</p>
+        <p>To complete the password reset process, visit the following link: </p>
+        <a href="${url}">
+            <button style="color: purple;">Reset Your Password</button>
+        </a>
+
+        <p>Username: ${user.email}</p>`
+    }
+
+    try {
+        await sendMail({
+            // user: user.email,
+            user: 'aakansha71089@gmail.com',
+            subject: 'Password Reset ▶️',
+            message
+        })
+
+        user.passwordResetToken = resetToken
+        user.save()
+
+        res.status(200).json({
+            status: "true",
+            message: 'Password reset link send to the user mail successfully!'
+        })
+    } catch (error) {
+        user.passwordResetToken = undefined
+        user.save()
+        next(new AppError('Error!'))
+    }
+})
+
+
+const resetPassword = catchAsync(async (req, res, next) => {
+    const { password } = req.body
+    const { token } = req.params
+
+    const { _id } = jwt.verify(token, process.env.SECRET_KEY)
+
+    const hashedPassword = await hashPassword(password)
+    await User.findByIdAndUpdate({ _id }, { $set: { password: hashedPassword, passwordResetToken: "" } })
+
+    res.status(200).json({ status: "true", message: 'Password updated successfully!' })
+})
+
+
+export { Register, Login, getAllUsers, getUserById, deleteUserById, forgetPasswordHandler, resetPassword }
