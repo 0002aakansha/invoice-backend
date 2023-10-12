@@ -116,7 +116,10 @@ const deleteUserById = catchAsync(async (req, res, next) => {
 
 const forgetPasswordHandler = catchAsync(async (req, res, next) => {
     const { email } = req.body
+    console.log(req.body);
     const user = await User.findOne({ email })
+
+    console.log('user: ', user);
 
     if (!user) return next(new AppError('User not found!', 404))
 
