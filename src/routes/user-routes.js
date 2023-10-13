@@ -6,7 +6,7 @@ userRouter.post('/login', Login)
 userRouter.post('/register', Register)
 userRouter.get('/', getAllUsers)
 userRouter.post('/forget/password', forgetPasswordHandler)
-userRouter.post('/reset/password/:token', resetPassword)
+userRouter.patch('/reset/password/:token', resetPassword)
 userRouter.get('/:id', getUserById)
 userRouter.delete('/:id', deleteUserById)
 
