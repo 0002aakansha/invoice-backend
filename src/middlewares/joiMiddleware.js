@@ -21,6 +21,8 @@ export const validateProjectReqBody = catchAsync(async (req, res, next) => {
         const schema = projectValidator
         const { error } = schema.validate(req.body)
 
+        console.log(error);
+
         if (error) {
             const msg = error.details.map(err => err.message).join(', ')
             next(new AppError(msg, 400))

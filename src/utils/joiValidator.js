@@ -142,11 +142,15 @@ export const projectValidator = (
             rate: Joi.number()
                 .min(0)
                 .required(),
-        })
+        }),
+        conversionRate: Joi.number()
+            .when('currency', {
+                is: 'INR',
+                then: Joi.number().required(),
+                otherwise: Joi.number(),
+            })
             .min(0),
         projectAmount: Joi.number()
-            .positive(),
-        conversionRate: Joi.number()
             .positive(),
         projectBelongsTo: Joi.string()
             .trim(),
@@ -154,6 +158,7 @@ export const projectValidator = (
             .trim(),
     })
 )
+
 
 export const InvoiceValidator = (
     Joi.object({

@@ -69,10 +69,17 @@ const updateProjectById = catchAsync(async (req, res, next) => {
     const { cId, pId } = req.params
     const updatedData = req.body
 
+    console.log(updatedData.conversionRate);
+
     if (Object.keys(updatedData).length === 0) return next(new AppError(`Please provide data to update!`, 400))
 
-    await Project.updateOne({ projectBelongsTo: cId, _id: pId }, { $set: { ...updatedData } }, { new: true })
-    const updatedProject = await Project.findById({ _id: pId })
+    if (updatedData.conversionRate) await Project.updateOne({ projectBelongsTo: cId, _id: pId }, { $set: { ...updatedData } }, { new: true })
+    else await Project.updateOne({ projectBelongsTo: cId, _id: pId }, {
+        $set: { ...updatedData },
+        $unset: { conversionRate: 1 }
+    }, { new: true })
+
+    const updatedProject = await Project.findById({ _id: pId }).populate('projectBelongsTo')
 
     if (!updatedProject) return next(new AppError('Error while updating project', 400))
 
