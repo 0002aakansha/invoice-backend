@@ -172,7 +172,7 @@ export const InvoiceValidator = (
         projectsSelected: Joi.array()
             .items(Joi.object({
                 id: Joi.number()
-                    .min(1)
+                    .min(0)
                     .required(),
                 projectDetails: Joi.string()
                     .required(),

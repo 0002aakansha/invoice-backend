@@ -1,27 +1,33 @@
 import mongoose, { Schema, model } from 'mongoose'
-import { InvoiceValidator } from '../utils/joiValidator'
 
 const schema = Schema({
-    createdFor: { type: mongoose.Schema.Types.ObjectId, ref: "organization", required: true },
-    createdOn: { type: Date, required: true },
-    projectsSelected: [{
-        id: { type: Number, required: true, unique: true },
+    createdFor: { type: mongoose.Schema.Types.ObjectId, ref: 'organization', required: true },
+    invoiceNumber: { type: String, unique: true },
+    createdOn: { type: String, required: true },
+    dueDate: { type: String, required: true },
+    projects: [{
+        id: { type: Number, required: true },
         projectDetails: { type: mongoose.Schema.Types.ObjectId, ref: 'project' },
-        period: { type: Number, required: true },
-        totalAmount: { type: Number, required: true }
+        period: { type: String },
+        workingDays: { type: Number },
+        totalWorkingDays: { type: Number },
+        hours: { type: Number },
+        amount: { type: Number, required: true }
     }],
-    subTotal: { type: Number, required: true },
-    gst: { type: Object || Number, required: true },
-    total: { type: Number, required: true },
-    invoiceCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }
+    subtotal: { type: Number, required: true },
+    GST: { type: Object || Number, required: true },
+    GrandTotal: { type: Number, required: true },
+    status: { type: String, required: true },
+    invoiceCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    invoiceType: { type: String, required: true }
 }, {
     timestamps: true
-  })
+})
 
-schema.methods.invoiceValidator = function (obj) {
-    const schema = InvoiceValidator
-    return schema.validate(obj)
-}
+// schema.methods.invoiceValidator = function (obj) {
+//     const schema = InvoiceValidator
+//     return schema.validate(obj)
+// }
 
 const Invoice = model('invoice', schema)
 
