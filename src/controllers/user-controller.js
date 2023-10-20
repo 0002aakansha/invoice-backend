@@ -160,7 +160,6 @@ const forgetPasswordHandler = catchAsync(async (req, res, next) => {
     }
 })
 
-
 const resetPassword = catchAsync(async (req, res, next) => {
     const { password } = req.body
     const { token } = req.params
@@ -174,4 +173,8 @@ const resetPassword = catchAsync(async (req, res, next) => {
 })
 
 
-export { Register, Login, getAllUsers, getUserById, deleteUserById, forgetPasswordHandler, resetPassword }
+const checkUserAuth = catchAsync(async (req, res) => {
+    res.status(200).json({status: 'true', message: 'UserExists!'})
+})
+
+export { Register, Login, getAllUsers, getUserById, deleteUserById, forgetPasswordHandler, resetPassword, checkUserAuth }
