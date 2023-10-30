@@ -1,6 +1,6 @@
 # react
 
-lifecycle in class-components & functional-components
+lifecycle in class-components & functional-components \n
 error boundaries
 lazy loading and suspence for performance optimization
     lazy() and suspence() method
