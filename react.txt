@@ -1,0 +1,4 @@
+error boundaries
+lazy loading and suspence for performance optimization
+    lazy() and suspence() method
+    https://retool.com/blog/react-lazy-loading-and-performance
