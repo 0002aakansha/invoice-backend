@@ -1,0 +1,4 @@
+- object methods
+  - object.freeze()
+  - object.seal()
+  - object.is()

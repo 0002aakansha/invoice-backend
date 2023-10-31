@@ -1,0 +1,2 @@
+- Driver.js => for customizable popovers and app guide and highlighting user focus by dimming background
+- responsive table => https://blog.logrocket.com/improving-responsive-data-table-ux-css/

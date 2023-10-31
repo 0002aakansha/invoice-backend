@@ -44,3 +44,58 @@
 > This asynchronous and batched behavior is important to understand when working with React's functional components. It allows React to optimize the rendering process and avoid unnecessary rendering cycles. However, it also means that you should be mindful of how you use the state and consider the timing of state updates, especially when the new state depends on the previous state.
 
 > If you need to perform actions after a state update is applied, you can use the useEffect hook. By placing code inside a useEffect callback, you can ensure that it runs after the component has rendered with the updated state.
+
+- lifting state up
+  - https://medium.com/@kristinethejohnson/lifting-state-up-prop-drilling-in-react-3ef3367fca7a
+- higher-order components (HOC)
+  - https://blog.logrocket.com/understanding-react-higher-order-components/
+  - https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb
+- pure components
+  - https://blog.logrocket.com/what-are-react-pure-functional-components/#:~:text=A%20React%20component%20is%20considered,are%20treated%20as%20pure%20components.
+- useEffect Hook
+  - https://blog.logrocket.com/useeffect-react-hook-complete-guide/
+- React.memo() => take two arguments(2nd is optional)
+
+  - first >> component
+  - second >> arePropsEqual()
+  - memo() performs shallow equality check
+
+    > React's React.memo utilizes a shallow equality check to determine whether a memoized functional component should re-render. This shallow equality check involves comparing the previous props to the current props using the Object.is method, which is similar to === for most cases but treats -0 and +0 as equal and treats NaN as not equal to itself.
+
+    > The default behavior of React.memo compares each prop and its value individually using Object.is. If all props are equal (according to Object.is), the component does not re-render.
+
+    ```
+        <MyComponent name="Alice" age={25} />
+        <MyComponent name="Alice" age={26} />
+    ```
+
+    > The shallow equality check compares the previous props and the current props and recognizes that the name prop is still "Alice," but the age prop has changed from 25 to 26. As a result, the component will re-render because at least one prop has changed.
+
+    > It's important to note that this shallow comparison checks only the top-level properties of the props. If your component's props include nested objects or arrays, changes within those nested structures might not trigger re-renders unless you provide a custom arePropsEqual function to React.memo. Customizing the equality check allows you to control which changes should cause re-renders based on your specific requirements.
+
+    > The arePropsEqual function is an optional argument that you can pass to React.memo to provide custom control over how props equality is determined.
+
+    > If you provide the arePropsEqual function, it replaces the default shallow equality check. This can be useful when you need more control over when a component should or should not re-render.
+
+    > The arePropsEqual function receives two sets of props as arguments: the previous props and the current props. It should return true if the two sets of props are considered equal and false if they are not. If the function returns true, the component won't re-render; if it returns false, the component will re-render.
+
+    ````
+        import React from "react";
+        ```
+
+        function MyComponent(props) {
+        // Component logic
+        }
+
+        function arePropsEqual(prevProps, nextProps) {
+        // Custom logic to determine if props are equal
+        return prevProps.id === nextProps.id;
+        }
+
+        export default React.memo(MyComponent, arePropsEqual);
+
+    ````
+
+    > In this example, the arePropsEqual function checks if the id prop has changed. If the id prop remains the same between renders, the component won't re-render. If it changes, the component will re-render.
+
+    > Customizing the equality check with arePropsEqual can be useful when you have complex or nested props and want to optimize the re-rendering behavior of your memoized component. However, in many cases, the default shallow comparison of props provided by React.memo is sufficient, and you may not need to provide a custom arePropsEqual function.
