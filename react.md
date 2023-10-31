@@ -30,7 +30,7 @@
   - https://itnext.io/use-automatic-batching-in-react-to-optimize-state-updates-4829f1156b2f
     - https://www.andreadiotallevi.com/blog/how-to-handle-multiple-set-state-calls-on-the-same-object-in-react
 
-###### useState() async behaviour
+#### useState() async behaviour
 
 > React does not immediately update the state or re-render the component. Instead, React will batch state updates and perform them before the next render. This batching of state updates is an optimization to avoid unnecessary re-renders and improve performance.
 
