@@ -1,18 +1,28 @@
 # React
 
-* lifecycle in class-components & functional-components
-* error boundaries
-    * class-component
-        * getDerivedStateFromError()
-        * componentDidCatch()
-    * functional-component
-        * react-error-boundary
-    * useErrorHandler()
-    * https://blog.logrocket.com/react-error-handling-with-react-error-boundary/
-* lazy loading and suspence for performance optimization
-    * lazy() and suspence() method
-    * https://retool.com/blog/react-lazy-loading-and-performance
-* webpacks in react
-    * https://www.scaler.com/topics/react/webpack-in-react/
-* custom react hooks
-    * https://blog.logrocket.com/create-your-own-custom-react-hooks/
+- reactjs interview questions repo
+  - https://github.com/sudheerj/reactjs-interview-questions
+- lifecycle in class-components & functional-components
+  - class component
+    - https://blog.logrocket.com/react-lifecycle-methods-tutorial-examples/
+  - functional component
+    - https://tsh.io/blog/react-component-lifecycle-methods-vs-hooks/
+- error boundaries
+  - class-component
+    - getDerivedStateFromError()
+    - componentDidCatch()
+  - functional-component
+    - react-error-boundary
+  - useErrorHandler()
+  - https://blog.logrocket.com/react-error-handling-with-react-error-boundary/
+- lazy loading and suspence for performance optimization
+  - lazy() and suspence() method
+  - https://retool.com/blog/react-lazy-loading-and-performance
+- webpacks in react
+  - https://www.scaler.com/topics/react/webpack-in-react/
+- custom react hooks
+  - https://blog.logrocket.com/create-your-own-custom-react-hooks/
+- useDeferrValue() Hook
+  - https://blog.webdevsimplified.com/2022-05/use-deferred-value/
+- Memoization in React
+  - https://www.sitepoint.com/implement-memoization-in-react-to-improve-performance/
