@@ -2,6 +2,9 @@
 
 - reactjs interview questions repo
   - https://github.com/sudheerj/reactjs-interview-questions
+- Reconciliation algo & virtual DOM
+  - https://medium.com/javarevisited/react-reconciliation-algorithm-86e3e22c1b40
+  - https://blog.logrocket.com/virtual-dom-react/#concept-review-what-is-dom
 - lifecycle in class-components & functional-components
   - class component
     - https://blog.logrocket.com/react-lifecycle-methods-tutorial-examples/
