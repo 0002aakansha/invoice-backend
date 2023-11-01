@@ -4,6 +4,7 @@
   - html version@latest => HTML5
   - previous version => XHTML 1.0 / HTML 4.01 / 3.2 / 2 / 1.0
   - https://www.educba.com/versions-of-html/
+  - https://github.com/adwaitya/html5-interview-questions#q-what-is-an-iframe-and-how-it-works
 - html-questions-repo
   - https://github.com/gendx/html-cheat-sheet
 - https://www.interviewbit.com/html-interview-questions/
