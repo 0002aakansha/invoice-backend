@@ -30,11 +30,14 @@ const createInvoice = catchAsync(async (req, res, next) => {
     status,
     active,
     invoiceType,
-  });
-  const newInvoice = await invoice.populate("createdFor");
-  await invoice.save();
+  }).populate("createdFor");
+  const newInvoice = await invoice.populate("projects.projectDetails");
+  await newInvoice.save();
 
-  res.status(201).json({ status: "true", newInvoice });
+  res.status(201).json({
+    status: "true",
+    newInvoice,
+  });
 });
 
 const getAllInvoice = catchAsync(async (req, res, next) => {
