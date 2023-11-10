@@ -44,6 +44,7 @@ export const OrgValidator = Joi.object({
     pin: Joi.string().pattern(new RegExp("^[0-9]{6}$")).required(),
     country: Joi.string().min(3).max(15).required(),
   }),
+  active: Joi.boolean().required()
 });
 
 export const UpdateValidator = Joi.object({
@@ -76,9 +77,14 @@ export const projectValidator = Joi.object({
       otherwise: Joi.number(),
     })
     .min(0),
-  projectAmount: Joi.number().positive(),
+  projectAmount: Joi.number().when("projectType", {
+    is: "monthly" | "fixed",
+    then: Joi.number().positive().required(),
+  }),
+  projectCycle: Joi.string().required(),
   projectBelongsTo: Joi.string().trim(),
   projectCreatedBy: Joi.string().trim(),
+  active: Joi.boolean()
 });
 
 export const InvoiceValidator = Joi.object({
@@ -100,4 +106,5 @@ export const InvoiceValidator = Joi.object({
     }) || Joi.number().positive(),
   total: Joi.number().positive(),
   invoiceCreatedBy: Joi.string().trim(),
+  active: Joi.boolean().required()
 });

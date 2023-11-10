@@ -4,8 +4,17 @@ import AppError from "../utils/appError";
 import catchAsync from "../utils/catchAsync";
 
 const createProject = catchAsync(async (req, res, next) => {
-  const { description, projectType, rate, amount, conversionRate, companyId } =
-    req.body;
+  console.log(req.body);
+  const {
+    description,
+    projectType,
+    rate,
+    amount,
+    projectCycle,
+    conversionRate,
+    companyId,
+    active,
+  } = req.body;
 
   // find company by it's id
   const projectBelongsTo = await Organization.findOne({
@@ -22,28 +31,27 @@ const createProject = catchAsync(async (req, res, next) => {
     );
 
   // create new project
-
-  const session = await Project.startSession();
-  session.startTransaction();
-  const opts = { session };
-
   const newProject = await Project({
     description,
     projectType,
     rate,
     projectAmount: amount,
+    projectCycle,
     conversionRate,
     projectBelongsTo: projectBelongsTo._id,
     projectCreatedBy: req.user._id,
+    active,
   });
-  const result = await newProject.save(opts);
 
   const { error } = newProject.projectValidator({
     description,
+    projectType,
     rate,
     projectAmount: amount,
+    projectCycle,
     conversionRate,
     projectBelongsTo: companyId,
+    active,
   });
 
   if (error) {
@@ -51,12 +59,10 @@ const createProject = catchAsync(async (req, res, next) => {
     return next(new AppError(msg), 400);
   }
 
+  const result = await newProject.save();
   // update companydetails collection
   projectBelongsTo.projects.push(result._id);
-  await projectBelongsTo.save(opts);
-
-  await session.commitTransaction();
-  session.endSession();
+  await projectBelongsTo.save();
 
   res.status(201).json({
     status: "true",
@@ -76,7 +82,14 @@ const getAllProjectsOfUser = catchAsync(async (req, res, next) => {
   if (allListedProjects.length === 0)
     return next(new AppError(`There are no listed projects!`, 404));
 
-  res.status(200).json({ status: "true", allListedProjects });
+  res
+    .status(200)
+    .json({
+      status: "true",
+      allListedProjects: allListedProjects.filter(
+        (project) => project.active === true
+      ),
+    });
 });
 
 const getAllProjectsBelongsTo = catchAsync(async (req, res, next) => {
@@ -89,13 +102,24 @@ const getAllProjectsBelongsTo = catchAsync(async (req, res, next) => {
   if (allListedProjects.length === 0)
     return next(new AppError(`There are no listed projects!`, 404));
 
-  res.status(200).json({ status: "true", allListedProjects });
+  res
+    .status(200)
+    .json({
+      status: "true",
+      allListedProjects: allListedProjects.filter(
+        (project) => project.active === true
+      ),
+    });
 });
 
 const getProjectById = catchAsync(async (req, res, next) => {
   const { cId, pId } = req.params;
   // const project = await Project.findOne({ projectCreatedBy: req.user._id, projectBelongsTo: Cid, _id: Pid })
-  const project = await Project.findOne({ projectBelongsTo: cId, _id: pId });
+  const project = await Project.findOne({
+    projectBelongsTo: cId,
+    _id: pId,
+    active: true,
+  });
 
   if (!project)
     return next(new AppError("Not Found! Please provide valid details!", 400));
@@ -107,14 +131,12 @@ const updateProjectById = catchAsync(async (req, res, next) => {
   const { cId, pId } = req.params;
   const updatedData = req.body;
 
-  console.log(updatedData.conversionRate);
-
   if (Object.keys(updatedData).length === 0)
     return next(new AppError(`Please provide data to update!`, 400));
 
   if (updatedData.conversionRate)
     await Project.updateOne(
-      { projectBelongsTo: cId, _id: pId },
+      { projectBelongsTo: cId, _id: pId, active: true },
       { $set: { ...updatedData } },
       { new: true }
     );
@@ -141,25 +163,18 @@ const updateProjectById = catchAsync(async (req, res, next) => {
 const deleteProjectById = catchAsync(async (req, res, next) => {
   const { cId, pId } = req.params;
 
-  const session = await Project.startSession();
-  session.startTransaction();
-  const opts = { session };
-
-  const project = await Project.deleteOne(
+  const project = await Project.updateOne(
     { projectBelongsTo: cId, _id: pId },
-    opts
+    { $set: { active: false } }
   );
-  if (!project.deletedCount)
+  console.log(project);
+  if (!project.modifiedCount)
     return next(new AppError("Not Found! Please check project_id", 400));
 
   await Organization.findByIdAndUpdate(
     { _id: cId },
-    { $pull: { projects: pId } },
-    opts
+    { $pull: { projects: pId } }
   );
-
-  await session.commitTransaction();
-  session.endSession();
 
   res
     .status(200)

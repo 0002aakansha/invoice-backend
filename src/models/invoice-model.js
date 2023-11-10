@@ -2,11 +2,11 @@ import mongoose, { Schema, model } from 'mongoose'
 
 const schema = Schema({
     createdFor: { type: mongoose.Schema.Types.ObjectId, ref: 'organization', required: true },
-    invoiceNumber: { type: String, unique: true },
+    invoiceNumber: { type: String },
     createdOn: { type: String, required: true },
     dueDate: { type: String, required: true },
     projects: [{
-        id: { type: Number, required: true },
+        id: { type: Number },
         projectDetails: { type: mongoose.Schema.Types.ObjectId, ref: 'project' },
         period: { type: String },
         workingDays: { type: Number },
@@ -19,7 +19,8 @@ const schema = Schema({
     GrandTotal: { type: Number, required: true },
     status: { type: String, required: true },
     invoiceCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
-    invoiceType: { type: String, required: true }
+    invoiceType: { type: String, required: true },
+    active: { type: Boolean, required: true },
 }, {
     timestamps: true
 })

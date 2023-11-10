@@ -6,7 +6,8 @@ const projectSchema = Schema(
     description: { type: String, unique: true, required: true },
     projectType: { type: String, required: true },
     rate: { type: Object, required: true },
-    projectAmount: { type: Number, required: true },
+    projectAmount: { type: Number },
+    projectCycle: { type: String, required: true },
     conversionRate: { type: Number },
     projectBelongsTo: {
       type: mongoose.Schema.Types.ObjectId,
@@ -18,6 +19,7 @@ const projectSchema = Schema(
       ref: "user",
       required: true,
     },
+    active: { type: Boolean }
   },
   {
     timestamps: true,

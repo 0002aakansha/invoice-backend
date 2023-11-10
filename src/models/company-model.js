@@ -1,27 +1,31 @@
-import mongoose, { Schema, model } from 'mongoose'
-import { OrgValidator } from '../utils/joiValidator'
+import mongoose, { Schema, model } from "mongoose";
+import { OrgValidator } from "../utils/joiValidator";
 
-const orgSchema = Schema({
+const orgSchema = Schema(
+  {
     name: { type: String, unique: true },
     gstin: { type: String, uppercase: true, unique: true },
     address: {
-        street: { type: String },
-        city: { type: String },
-        state: { type: String },
-        pin: { type: String },
-        country: { type: String }
+      street: { type: String },
+      city: { type: String },
+      state: { type: String },
+      pin: { type: String },
+      country: { type: String },
     },
-    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'project' }],
-    companyCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
-}, {
-    timestamps: true
-  })
+    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "project" }],
+    companyCreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    active: { type: Boolean, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 orgSchema.methods.orgValidator = function (obj) {
-    const schema = OrgValidator
-    return schema.validate(obj)
-}
+  const schema = OrgValidator;
+  return schema.validate(obj);
+};
 
-const Organization = model('organization', orgSchema)
+const Organization = model("organization", orgSchema);
 
-export default Organization
+export default Organization;
