@@ -13,10 +13,11 @@ const schema = Schema(
     projects: [
       {
         id: { type: Number },
-        projectDetails: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "project",
-        },
+        projectDetails:
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "project",
+          },
         period: { type: String },
         workingDays: { type: Number },
         totalWorkingDays: { type: Number },
