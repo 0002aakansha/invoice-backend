@@ -2,6 +2,11 @@
 
 - js-questions-repo
   - https://github.com/albseb511/fsd/blob/master/javascript.md
+- async javascript visualizers
+  - https://pythontutor.com/render.html#mode=display
+  - https://ui.dev/javascript-visualizer
+  - http://latentflip.com/loupe/?code=YSA9IDUKY29uc29sZS5sb2coYSkKbGV0IGEgPSAy!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D
+  - https://www.jsv9000.app/
 - object methods
   - object.freeze()
   - object.seal()
