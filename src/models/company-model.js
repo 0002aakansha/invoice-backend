@@ -5,6 +5,7 @@ const orgSchema = Schema(
   {
     name: { type: String, unique: true },
     gstin: { type: String, uppercase: true, unique: true },
+    tds: {type: Number},
     address: {
       street: { type: String },
       city: { type: String },

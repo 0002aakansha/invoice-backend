@@ -37,6 +37,7 @@ export default Joi.object({
 export const OrgValidator = Joi.object({
   name: Joi.string().min(3).max(40).trim().required(),
   gstin: Joi.string().trim().alphanum().length(15).required(),
+  tds: Joi.number().min(0).max(10),
   address: Joi.object({
     street: Joi.string().max(50).required(),
     city: Joi.string().min(3).max(15).required(),
@@ -44,7 +45,7 @@ export const OrgValidator = Joi.object({
     pin: Joi.string().pattern(new RegExp("^[0-9]{6}$")).required(),
     country: Joi.string().min(3).max(15).required(),
   }),
-  active: Joi.boolean().required()
+  active: Joi.boolean().required(),
 });
 
 export const UpdateValidator = Joi.object({
@@ -84,7 +85,7 @@ export const projectValidator = Joi.object({
   projectCycle: Joi.string().required(),
   projectBelongsTo: Joi.string().trim(),
   projectCreatedBy: Joi.string().trim(),
-  active: Joi.boolean()
+  active: Joi.boolean(),
 });
 
 export const InvoiceValidator = Joi.object({
@@ -106,5 +107,5 @@ export const InvoiceValidator = Joi.object({
     }) || Joi.number().positive(),
   total: Joi.number().positive(),
   invoiceCreatedBy: Joi.string().trim(),
-  active: Joi.boolean().required()
+  active: Joi.boolean().required(),
 });

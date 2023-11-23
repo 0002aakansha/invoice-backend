@@ -4,11 +4,12 @@ import AppError from "../utils/appError";
 import catchAsync from "../utils/catchAsync";
 
 const createCompany = catchAsync(async (req, res, next) => {
-  const { name, gstin, address, active } = req.body;
+  const { name, gstin, tds, address, active } = req.body;
 
   const org = await Organization({
     name,
     gstin,
+    tds,
     address,
     active,
     companyCreatedBy: req.user._id,
@@ -33,7 +34,12 @@ const getAllListedCompanies = catchAsync(async (req, res, next) => {
   if (getAll.length === 0)
     return next(new AppError(`There are no listed companies!`, 404));
 
-  res.status(200).json({ status: "true", allListedCompanies: getAll.filter(client => client?.active === true) });
+  res
+    .status(200)
+    .json({
+      status: "true",
+      allListedCompanies: getAll.filter((client) => client?.active === true),
+    });
 });
 
 const getCompanyByID = catchAsync(async (req, res, next) => {
