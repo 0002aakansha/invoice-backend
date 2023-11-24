@@ -9,6 +9,8 @@ const createInvoice = catchAsync(async (req, res, next) => {
     createdOn,
     dueDate,
     projects,
+    tds,
+    discount,
     subtotal,
     GST,
     GrandTotal,
@@ -24,6 +26,8 @@ const createInvoice = catchAsync(async (req, res, next) => {
     dueDate,
     projects,
     subtotal,
+    tds,
+    discount,
     GST,
     GrandTotal,
     invoiceCreatedBy: req.user._id,
@@ -51,7 +55,18 @@ const getAllInvoice = catchAsync(async (req, res, next) => {
   res.status(201).json({ status: "true", allInvoices });
 });
 
-const getInvoiceById = catchAsync(async (req, res, next) => {});
+const getInvoiceById = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const invoice = await Invoice.findById({ _id: id })
+    .populate("createdFor")
+    .populate("projects.projectDetails")
+    .populate("invoiceCreatedBy");
+  if (!invoice)
+    next(new AppError("Invalid ObjectId! Please provide valid Id."));
+
+  res.status(200).json({ status: "true", invoice });
+});
 
 const updateInvoice = catchAsync(async (req, res, next) => {
   const { id } = req.params;
@@ -63,12 +78,19 @@ const updateInvoice = catchAsync(async (req, res, next) => {
 
   const updatedInvoice = await Invoice.findByIdAndUpdate(
     { _id: id },
-    { $set: updateData },
+    {
+      $set: {
+        amountReceived: updateData.amountReceived,
+        receivedOn: updateData.receivedOn,
+      },
+    },
     { new: true }
   )
     .populate("createdFor")
     .populate("projects.projectDetails")
     .populate("invoiceCreatedBy");
+  // const updatedInvoice = await userExists({ ...userExists, updateData });
+  console.log(updatedInvoice);
 
   res.status(200).json({ status: "true", updatedInvoice });
 });

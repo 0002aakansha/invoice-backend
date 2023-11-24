@@ -13,11 +13,13 @@ const schema = Schema(
     projects: [
       {
         id: { type: Number },
-        projectDetails:
-          {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "project",
-          },
+        projectDetails: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "project",
+        },
+        description: { type: String },
+        rate: { type: Object},
+        conversionRate: { type: Number },
         period: { type: String },
         workingDays: { type: Number },
         totalWorkingDays: { type: Number },
@@ -25,6 +27,8 @@ const schema = Schema(
         amount: { type: Number, required: true },
       },
     ],
+    discount: { type: Number },
+    tds: { type: Number },
     subtotal: { type: Number, required: true },
     GST: { type: Object || Number, required: true },
     GrandTotal: { type: Number, required: true },
