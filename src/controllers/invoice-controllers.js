@@ -79,9 +79,11 @@ const updateInvoice = catchAsync(async (req, res, next) => {
   const updatedInvoice = await Invoice.findByIdAndUpdate(
     { _id: id },
     {
-      $set: {
-        amountReceived: updateData.amountReceived,
-        receivedOn: updateData.receivedOn,
+      $push: {
+        receivedStatus: {
+          amountReceived: updateData.amountReceived,
+          receivedOn: updateData.receivedOn,
+        },
       },
     },
     { new: true }
