@@ -1,5 +1,9 @@
 # JS
 
+- interpeted vs compiled language
+  - https://www.freecodecamp.org/news/compiled-versus-interpreted-languages/
+- static vs dynamic(loosely typed) language
+  - https://www.bairesdev.com/blog/static-vs-dynamic-typing/
 - js-questions-repo
   - https://github.com/albseb511/fsd/blob/master/javascript.md
 - async javascript visualizers
