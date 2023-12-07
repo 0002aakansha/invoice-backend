@@ -10,6 +10,7 @@
     - https://blog.logrocket.com/react-lifecycle-methods-tutorial-examples/
   - functional component
     - https://tsh.io/blog/react-component-lifecycle-methods-vs-hooks/
+- React Shimmer & Fiber
 - error boundaries
   - class-component
     - getDerivedStateFromError()
