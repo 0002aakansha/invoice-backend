@@ -4,3 +4,8 @@
     https://www.geeksforgeeks.org/jwt-authentication-with-refresh-tokens/
 - Websocket
   > > WebSocket is a communication protocol that provides two-way communication between a client and a server over a single, long-lived connection.It also enables more interactive and real-time applications, such as chat applications, live data updates, and multiplayer games.
+- Message Queue
+  >> Dead letter Queue
+  >> BullMQ
+
+- Redis
