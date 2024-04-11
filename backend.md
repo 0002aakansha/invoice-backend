@@ -9,3 +9,11 @@
   >> BullMQ
 
 - Redis
+- GraphQL
+  - It is open source query language which enables declarative data fetching where a client can specify exactly what data it needs from an API.
+  - SDL (Schema Defination Language) contract between client and server which ensures that which data client will be query for and server can implement how that query can be accessed
+  - we often need to change data that are present in server instead of just retrieving it so for that we have mutations in graphql
+  >> https://learning.edx.org/course/course-v1:LinuxFoundationX+LFS141x+1T2023/block-v1:LinuxFoundationX+LFS141x+1T2023+type@sequential+block@eb9599d5cc374d739b6647f1cf2cbd5d/block-v1:LinuxFoundationX+LFS141x+1T2023+type@vertical+block@6d4ba4036d3643fe8e1b675930ca4985
+  - Subscriptions 
+    - Another important requirement for many applications today is to have a real-time connection to the server in order to get immediately informed about important events. For this use case, GraphQL offers the concept of subscriptions.
+    >> https://learning.edx.org/course/course-v1:LinuxFoundationX+LFS141x+1T2023/block-v1:LinuxFoundationX+LFS141x+1T2023+type@sequential+block@eb9599d5cc374d739b6647f1cf2cbd5d/block-v1:LinuxFoundationX+LFS141x+1T2023+type@vertical+block@2ef11b0fc25541678a2c2bc0eac9bbee

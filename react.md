@@ -1,5 +1,7 @@
 # React
 
+- Components in react 
+  https://www.geeksforgeeks.org/reactjs-components/
 - reactjs interview questions repo
   - https://github.com/sudheerj/reactjs-interview-questions
 - Reconciliation algo & virtual DOM

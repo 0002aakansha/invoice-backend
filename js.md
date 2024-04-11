@@ -16,6 +16,7 @@
   - object.seal()
   - object.is()
 - ES6 features
+  https://www.geeksforgeeks.org/introduction-to-es6/
 - promise
 
   - https://www.freecodecamp.org/news/javascript-promise-tutorial-how-to-resolve-or-reject-promises-in-js/
