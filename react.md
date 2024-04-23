@@ -1,5 +1,6 @@
 # React
-
+- react optimization techniques
+    https://scientyficworld.org/how-to-optimize-the-dom-size-in-react-js/#The_Impact_of_a_Large_DOM
 - Components in react 
   https://www.geeksforgeeks.org/reactjs-components/
 - reactjs interview questions repo
