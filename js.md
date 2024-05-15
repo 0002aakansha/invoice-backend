@@ -1,5 +1,7 @@
 # JS
 
+- DOM
+  https://scientyficworld.org/understanding-the-dom-tree-structure/
 - interpeted vs compiled language
   - https://www.freecodecamp.org/news/compiled-versus-interpreted-languages/
 - static vs dynamic(loosely typed) language
