@@ -1,0 +1,4 @@
+- Why nextjs
+- Problems with react that next solves
+- React server components in nextjs
+    - https://www.joshwcomeau.com/react/server-components/
