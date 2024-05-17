@@ -33,3 +33,7 @@
     + Real-time Notifications: Webhooks are frequently used to send real-time notifications to users or systems. For example:
       + Instantly notifying users about new messages, comments, or mentions on social media platforms.
     
+- OAuth flow
+<img src="./assets/authorization_code_flow.png"
+     alt="authorization_code_flow"
+     style="width: 100%" />
