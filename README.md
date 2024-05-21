@@ -7,16 +7,16 @@ This microservice handles OAuth authentication for an organisation using Microso
     * **Endpoint: getOpenIdRedirect**
     * **Description:** This function generates the URL to which the user will be redirected to authenticate with their Microsoft account.
 ### GraphQL Query Example:
-    ```
+    ~~~
     query MyQuery{
         getOpenIdRedirect(organisation_name: "Example1") {
             status
             redirectTo
         }
     }
-    ```
+    ~~~
 ### Example Response
-    ```
+    ~~~
     {
         "data": {
             "getOpenIdRedirect": {
@@ -25,7 +25,7 @@ This microservice handles OAuth authentication for an organisation using Microso
             }
         }
     }
-    ```
+    ~~~
 2. User Redirection and Login
     * **User Action:** The user follows the redirect URL and logs in with their credentials on the Microsoft login page.
     * **Receive Authorization Code:** After successful login, the user is redirected back to the specified redirect URI with an authorization code.
