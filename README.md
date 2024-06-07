@@ -45,4 +45,4 @@ When testing these queries and mutations in Postman, ensure you include your App
 3. In the Headers tab, add a new key-value pair:
     * **Key:** x-api-key
     * **Value:** <Your AppSync API Key>
-4. In the Query tab, enter your GraphQL query or mutation.
+<!-- 4. In the Query tab, enter your GraphQL query or mutation. -->
